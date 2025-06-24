@@ -62,9 +62,13 @@ playingGame = True;
 try:
     while playingGame:
 
+
         # Default configuration
+        minimumWords = 1 # this is not configured by the user
+
         minAmount = 7
-        maxAmount = 7 
+        maxAmount = 7
+        availableWords = []
         if skipConfiguration:
             availableWords, availableWordsAmount = FilterWords(minAmount,maxAmount)
         lifesPerWord = 4
@@ -79,8 +83,8 @@ try:
                             "That's not a valid number, please try again.")
                 maxAmount = getIntInput("How many letters should the word have at maximum?",\
                             "That's not a valid number, please try again.")
-                _, availableWordsAmount = FilterWords(minAmount,maxAmount)
-                if availableWordsAmount > 0:
+                availableWords, availableWordsAmount = FilterWords(minAmount,maxAmount)
+                if availableWordsAmount > (minimumWords-1) :
                     break
                 else:
                     print("There are 0 words left, please change the minimum/maximum.")
@@ -88,12 +92,12 @@ try:
             lifesPerWord = 4
             
             while True:
-                wordAmount = getIntInput("Please input how many words you'd like to guess! 1-{0}".format(availableWordsAmount),\
+                wordAmount = getIntInput("Please input how many words you'd like to guess! {0}-{1}".format(minimumWords,availableWordsAmount),\
                             "That's not a valid number, please try again.")
-                if 0 < wordAmount <= availableWordsAmount:
+                if (minimumWords-1) < wordAmount <= availableWordsAmount:
                     break
                 else:
-                    print("Selected number is not within the 1-{0} range.".format(availableWordsAmount))
+                    print("Selected number is not within the {0}-{1} range.".format(minimumWords,availableWordsAmount))
         
 
         print("Are you ready to begin?!")
